@@ -1,12 +1,12 @@
-package project.model;
+// import project.java.app.dto;
 
-public class Guest {
+    public class GuestDto {
     private long Id;
     private String userId;  
-    private Partner partnerId;
+    private PartnerDto partnerId;
     private Boolean status;
 
-    public Guest() {
+    public GuestDto() {
     }
 
     public long getId() {
@@ -25,11 +25,11 @@ public class Guest {
         this.userId = userId;
     }
 
-    public Partner getPartnerId() {
+    public PartnerDto getPartnerId() {
         return partnerId;
     }
 
-    public void setPartnerId(Partner partnerId) {
+    public void setPartnerId(PartnerDto partnerId) {
         this.partnerId = partnerId;
     }
 

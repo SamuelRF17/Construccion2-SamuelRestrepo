@@ -1,4 +1,4 @@
-package project.controller.validator;
+package project.java.app.controller.validator;
 
 public class InvoiceValidator extends CommonsValidator {
     public InvoiceValidator() {

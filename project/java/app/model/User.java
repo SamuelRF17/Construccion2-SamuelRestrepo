@@ -1,4 +1,4 @@
-package project.model;
+package project.java.app.model;
 
 public class User {
     private long Id;

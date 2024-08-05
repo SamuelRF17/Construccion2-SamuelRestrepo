@@ -1,4 +1,4 @@
-package project.controller;
+package project.java.app.controller;
 
 import java.util.Scanner;
 

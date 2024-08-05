@@ -1,8 +1,7 @@
-package project.model;
-// package project;
+package project.java.app.model;
 
 public class Persons {
-    private long Id, cedula, celPhone;
+    private long Id, cedula, celphone;
     private String name;
 
     public Persons() {
@@ -24,12 +23,12 @@ public class Persons {
         this.cedula = cedula;
     }
 
-    public long getCelPhone() {
-        return celPhone;
+    public long getCelphone() {
+        return celphone;
     }
 
-    public void setCelPhone(long celPhone) {
-        this.celPhone = celPhone;
+    public void setCelphone(long celphone) {
+        this.celphone = celphone;
     }
 
     public String getName() {
@@ -40,4 +39,5 @@ public class Persons {
         this.name = name;
     }
 
+    
 }
