@@ -1,6 +1,6 @@
-// import project.java.app.dto;
+package project.java.app.DTO;
 
-    public class GuestDto {
+public class GuestDto {
     private long Id;
     private String userId;  
     private PartnerDto partnerId;

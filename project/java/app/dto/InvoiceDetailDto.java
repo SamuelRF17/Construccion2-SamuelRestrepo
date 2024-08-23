@@ -1,3 +1,4 @@
+package project.java.app.DTO;
 
 public class InvoiceDetailDto {
     private long Id;

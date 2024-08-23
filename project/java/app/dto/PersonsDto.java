@@ -1,3 +1,4 @@
+package project.java.app.DTO;
 
 public class PersonsDto {
     private long Id, cedula, celPhone;

@@ -1,3 +1,4 @@
+package project.java.app.DTO;
 
 import java.security.Timestamp;
 
