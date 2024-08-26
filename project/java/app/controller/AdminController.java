@@ -12,7 +12,7 @@ public class AdminController implements ControllerInterface {
     private UserValidator userValidator;
 	// private AdminService service;
 
-	private static final String MENU = "ingrese la opcion que desea \n 1.para crear veterinario \n 2. para crear vendedor \n 3. para cerrar sesion \n";
+	private static final String MENU = "ingrese la opcion que desea \n 1.para crear usuario \n 2. para crear vendedor \n 3. para cerrar sesion \n";
 
 
     public AdminController() {
@@ -30,7 +30,7 @@ public class AdminController implements ControllerInterface {
 
     private boolean menu() {
         try {
-			System.out.println("bienvenido " + Service.user.getUserName());
+			System.out.println("bienvenido ");
 			System.out.print(MENU);
 			String option = Utils.getReader().nextLine();
 			return options(option);
