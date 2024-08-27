@@ -1,13 +1,18 @@
 package project.java.app.service;
 
+import project.java.app.dao.UserDaoImplementation;
 import project.java.app.DTO.UserDto;
+import project.java.app.dao.interfaces.UserDao;
 import project.java.app.service.interfaces.LoginService;
 
 public class Service implements LoginService {
+	private UserDao userDao;
+
+
     public static UserDto user;
 
     public Service() {
-        user = new UserDto();
+		this.userDao = new UserDaoImplementation();
     }
 
     @Override

@@ -13,7 +13,7 @@ public class PersonValidator extends CommonsValidator {
 		return super.isValidLong("la cedula de la persona ", document);
 	}
 	
-	public int validAge(String age) throws Exception{
-		return super.isValidInteger("la edad de la persona ", age);
+	public int validCelPhone(String celPhone) throws Exception{
+		return super.isValidInteger("El numero de telefono es ", celPhone);
 	}
 }

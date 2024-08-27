@@ -5,12 +5,14 @@ import project.java.app.DTO.UserDto;
 import project.java.app.controller.validator.ControllerInterface;
 import project.java.app.controller.validator.PersonValidator;
 import project.java.app.controller.validator.UserValidator;
-import project.java.app.service.*;
+import project.java.app.service.interfaces.LoginService;
+import project.java.app.service.interfaces.AdminService;
+import project.java.app.DTO.*;
 
 public class AdminController implements ControllerInterface {
     private PersonValidator personValidator;
     private UserValidator userValidator;
-	// private AdminService service;
+	private AdminService service;
 
 	private static final String MENU = "ingrese la opcion que desea \n 1.para crear usuario \n 2. para crear vendedor \n 3. para cerrar sesion \n";
 
@@ -64,29 +66,29 @@ public class AdminController implements ControllerInterface {
 	}
 
     public void createUser() throws Exception {
-        System.out.println("ingrese el nombre del usuario");
+        System.out.println("ingrese nombre completo");
 		String name = Utils.getReader().nextLine();
 		personValidator.validName(name);
-		System.out.println("ingrese la cedula del veterinario");
-		long document = personValidator.validDocument(Utils.getReader().nextLine());
-		System.out.println("ingrese el nombre de usuario del veterinario");
+		System.out.println("ingrese cedula ");
+		long document = personValidator.validDocument(Utils.getReader().nextLine());	
+		System.out.println("ingrese numero de telefono");
+		String celPhone = Utils.getReader().next();
+		personValidator.validCelPhone(celPhone);
+		System.out.println("--Crear usuario--\nIngrese nombre de usuario");
 		String userName = Utils.getReader().nextLine();
 		userValidator.validUserName(userName);
-		System.out.println("ingrese la contraseña del veterinario");
+		System.out.println("ingrese la contrasena");
 		String password = Utils.getReader().nextLine();
 		userValidator.validPassword(password);
-		PersonDto personDto = new PersonDto();
+		PersonsDto personDto = new PersonsDto();
 		personDto.setName(name);
-		personDto.setDocument(document);
-		personDto.setAge(age);
+		personDto.setCedula(document);
+		personDto.setCelPhone(celPhone);
 		UserDto userDto = new UserDto();
-		userDto.setPersonid(personDto);
+		userDto.setPersonId(personDto);
 		userDto.setUserName(userName);
-		userDto.setPassword(password);
-		userDto.setRole("veterinarian");
-		this.service.createVeterinarian(userDto);
+		userDto.setRol("Socio");
+		this.service.createUser(userDto);
 		System.out.println("se ha creado el usuario exitosamente");
     }
-
-
 }

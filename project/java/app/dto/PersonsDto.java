@@ -1,8 +1,8 @@
 package project.java.app.DTO;
 
 public class PersonsDto {
-    private long Id, cedula, celPhone;
-    private String name;
+    private long Id, cedula;
+    private String name, celPhone;
 
     public PersonsDto() {
     }
@@ -23,11 +23,11 @@ public class PersonsDto {
         this.cedula = cedula;
     }
 
-    public long getCelPhone() {
+    public String getCelPhone() {
         return celPhone;
     }
 
-    public void setCelPhone(long celPhone) {
+    public void setCelPhone(String celPhone) {
         this.celPhone = celPhone;
     }
 
