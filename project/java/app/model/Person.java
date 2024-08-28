@@ -1,10 +1,10 @@
 package project.java.app.model;
 
-public class Persons {
+public class Person {
     private long Id, cedula, celphone;
     private String name;
 
-    public Persons() {
+    public Person() {
     }
 
     public long getId() {

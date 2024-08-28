@@ -3,7 +3,7 @@ package project.java.app.model;
 public class User {
     private long Id;
     private String userName, Rol;
-    private Persons personId;
+    private Person personId;
 
     public User() {
     }
@@ -32,11 +32,11 @@ public class User {
         Rol = rol;
     }
 
-    public Persons getPersonId() {
+    public Person getPersonId() {
         return personId;
     }
 
-    public void setPersonId(Persons personId) {
+    public void setPersonId(Person personId) {
         this.personId = personId;
     }
 

@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Invoice {
     private long Id;
-    private Persons personId;
+    private Person personId;
     private Partner partnerId;
     private Date dateCreated;
     private double amount;
@@ -21,11 +21,11 @@ public class Invoice {
         Id = id;
     }
 
-    public Persons getPersonId() {
+    public Person getPersonId() {
         return personId;
     }
 
-    public void setPersonId(Persons personId) {
+    public void setPersonId(Person personId) {
         this.personId = personId;
     }
 

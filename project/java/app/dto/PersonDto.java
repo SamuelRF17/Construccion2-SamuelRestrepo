@@ -1,10 +1,10 @@
 package project.java.app.DTO;
 
-public class PersonsDto {
+public class PersonDto {
     private long Id, cedula;
     private String name, celPhone;
 
-    public PersonsDto() {
+    public PersonDto() {
     }
 
     public long getId() {

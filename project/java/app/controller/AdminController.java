@@ -80,7 +80,7 @@ public class AdminController implements ControllerInterface {
 		System.out.println("ingrese la contrasena");
 		String password = Utils.getReader().nextLine();
 		userValidator.validPassword(password);
-		PersonsDto personDto = new PersonsDto();
+		PersonDto personDto = new PersonDto();
 		personDto.setName(name);
 		personDto.setCedula(document);
 		personDto.setCelPhone(celPhone);

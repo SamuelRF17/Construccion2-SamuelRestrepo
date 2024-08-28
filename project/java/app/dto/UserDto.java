@@ -3,7 +3,7 @@ package project.java.app.DTO;
 public class UserDto {
     private long Id;
     private String userName, Rol;
-    private PersonsDto personId;
+    private PersonDto personId;
 
     public UserDto() {
     }
@@ -32,11 +32,11 @@ public class UserDto {
         Rol = rol;
     }
 
-    public PersonsDto getPersonId() {
+    public PersonDto getPersonId() {
         return personId;
     }
 
-    public void setPersonId(PersonsDto personId) {
+    public void setPersonId(PersonDto personId) {
         this.personId = personId;
     }
 
