@@ -1,7 +1,7 @@
-package project.java.app.controller.validator;
+package app.controller.validator;
 
 public class PersonValidator extends CommonsValidator {
-	public PersonValidator() {
+    public PersonValidator() {
 		super();
 	}
 	public void validName(String name) throws Exception{

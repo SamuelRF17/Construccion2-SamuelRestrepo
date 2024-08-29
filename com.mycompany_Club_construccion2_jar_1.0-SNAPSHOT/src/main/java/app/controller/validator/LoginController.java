@@ -1,8 +1,9 @@
-package project.java.app.controller.validator;
+package app.controller.validator;
 
-import project.java.app.DTO.UserDto;
-import project.java.app.service.Service;
+// import java.security.Provider.Service;
 
+import app.dto.UserDto;
+import app.service.Service;
 
 public class LoginController implements ControllerInterface {
     private Service service;
