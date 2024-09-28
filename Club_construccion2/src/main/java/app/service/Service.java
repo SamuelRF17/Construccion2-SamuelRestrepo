@@ -49,7 +49,7 @@ public class Service implements LoginService{
 		PersonDto person = user.getPersonId();
 		String sql = "INSERT INTO person (DOCUMENT, NAME, CELLPHONE) VALUES (?, ?, ?)";
 		try {
-        conn = connection.getConnection(); // Obtén la conexión desde MYSQLConnection.
+        conn = connection.getConnection(); 
         pstmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
         pstmt.setString(1, person.getCedula());
