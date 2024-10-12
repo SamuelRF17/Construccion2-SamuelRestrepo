@@ -4,10 +4,14 @@
  */
 package app.dao.Interfaces;
 
+import app.dto.PartnerDto;
+
 /**
  *
  * @author ESTUDIANTES
  */
 public interface PartnerDao {
-    
+    public PartnerDto findById(long id) throws Exception;
+    public void save(PartnerDto partnerDto) throws Exception;
+    public long countVIPs() throws Exception;
 }

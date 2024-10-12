@@ -4,17 +4,13 @@
  */
 package app.dao.jpainterface;
 
-import app.model.Person;
+import app.model.Guest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author ACER
  */
-public interface PersonRepository extends JpaRepository<Person, Long>{
-
-    public boolean existsByCedula(long cedula);
-
-    public Person findByCedula(long cedula);
+public interface GuestRepository extends JpaRepository <Guest, Long> {
     
 }

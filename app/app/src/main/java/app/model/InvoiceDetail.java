@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -30,7 +31,7 @@ public class InvoiceDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
     @ManyToOne
-    @Column(name = "invoiceid")
+    @JoinColumn(name = "invoiceid")
     private Invoice invoiceId;
     @Column(name = "item")
     private int item;

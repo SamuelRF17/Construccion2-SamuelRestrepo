@@ -4,20 +4,25 @@
  */
 package app.controller;
 
-import app.controller.validator.PersonValidator;
-import org.springframework.beans.factory.annotation.Autowired;
+import app.dto.UserDto;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.stereotype.Controller;
 
 /**
  *
  * @author ACER
  */
-public class SellerController implements ControllerInterface {
-    @Autowired
-    private PersonValidator personValidator;
+@Getter
+@Setter
+@NoArgsConstructor
+@Controller
+public class GuestController implements ControllerInterface{
     
-    private static final String MENU = "ingrese la opcion que desea: \n 1. para . \n 2. para detener la ejecucion.";
+    private static final String MENU = "-MENU INVITADO-\ningrese la opcion que desea: \n 1. para iniciar sesion. \n 2. para volver.";
 
-    
+
     @Override
     public void session() throws Exception {
         boolean session = true;
@@ -25,6 +30,7 @@ public class SellerController implements ControllerInterface {
             session = menu();
         }
     }
+
     private boolean menu() {
         try {
             System.out.println(MENU);
@@ -35,11 +41,11 @@ public class SellerController implements ControllerInterface {
             return true;
         }
     }
-    
+
     private boolean options(String option) throws Exception {
         switch (option) {
             case "1": {
-                this.login();
+               // this.();
                 return true;
             }
             case "2": {
@@ -52,8 +58,7 @@ public class SellerController implements ControllerInterface {
             }
         }
     }
+
     
-    private void login() throws Exception {
-        
-    }
+
 }

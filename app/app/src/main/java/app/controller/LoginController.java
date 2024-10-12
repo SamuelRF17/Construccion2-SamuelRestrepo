@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import app.controller.validator.UserValidator;
+import app.dto.UserDto;
 import app.service.interfaces.LoginService;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,24 +19,25 @@ import org.springframework.stereotype.Controller;
  *
  * @author ACER
  */
-@Controller
 @Getter
 @Setter
+@Controller
 public class LoginController implements ControllerInterface{
     @Autowired
     private UserValidator userValidator;
     @Autowired
     private LoginService service;
-    private static final String MENU = "ingrese la opcion que desea: \n 1. para iniciar sesion. \n 2. para detener la ejecucion.";
+    private static final String MENU = "-MENU PRICIPAL--\ningrese la opcion que desea: \n 1. para iniciar sesion. \n 2. para detener la ejecucion.";
     private Map<String, ControllerInterface> roles;
 
-    public LoginController(AdminController adminController, SellerController sellerController){
-        //this.roles = new HashMap<String, ControllerInterface>();
-        //roles.put("admin", adminController);
-        roles.put("seller", sellerController);
+    public LoginController(AdminController adminController, PartnerController partnerController, GuestController guestController){
+        this.roles = new HashMap<String, ControllerInterface>();
+        roles.put("admin", adminController);
+        roles.put("invitado",guestController );
+        roles.put("socio", partnerController);
     }
 
-     @Override
+    @Override
     public void session() throws Exception {
         boolean session = true;
         while (session) {
@@ -72,7 +74,21 @@ public class LoginController implements ControllerInterface{
     }
 
     private void login() throws Exception {
-        
+        System.out.println("Ingrese el usuario:");
+        String userName = Utils.getReader().nextLine();
+        userValidator.validUserName(userName);
+        System.out.println("Ingrese la contraseña:");
+        String password = Utils.getReader().nextLine(); 
+        userValidator.validPassword(password);  
+        UserDto userDto = new UserDto();
+        userDto.setUserName(userName);
+        userDto.setPassword(password);
+        this.service.login(userDto);
+        if(roles.get(userDto.getRol()) == null){
+            throw new Exception("el rol no esta registrado");   
+        }
+        System.out.println("--sesion completada--");
+        roles.get(userDto.getRol()).session();
     }
     
 }

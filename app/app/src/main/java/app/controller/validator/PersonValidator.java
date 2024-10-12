@@ -1,5 +1,8 @@
 package app.controller.validator;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class PersonValidator extends CommonsValidator {
     public PersonValidator() {
 		super();

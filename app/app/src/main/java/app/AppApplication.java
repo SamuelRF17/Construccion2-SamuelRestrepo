@@ -11,10 +11,7 @@ public class AppApplication implements CommandLineRunner {
     @Autowired
     LoginController controller;
     public static void main(String[] args) {
-        System.out.println("aa");
         SpringApplication.run(AppApplication.class, args);
-        System.out.println("bb");
-
     }
 
     @Override

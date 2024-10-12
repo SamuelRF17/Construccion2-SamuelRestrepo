@@ -4,10 +4,14 @@
  */
 package app.dao.Interfaces;
 
+import app.dto.GuestDto;
+
 /**
  *
  * @author ESTUDIANTES
  */
 public interface GuestDao {
-    
+    public GuestDto findById(long id) throws Exception;
+    public void saveGuest(GuestDto guestDto) throws Exception;
+    public void createGuest(GuestDto guestDto) throws Exception;
 }

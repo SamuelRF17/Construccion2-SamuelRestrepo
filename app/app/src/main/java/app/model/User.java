@@ -31,7 +31,7 @@ public class User {
     @Column(name = "id")
     private long Id;
     @OneToOne
-    @JoinColumn(name = "personid")
+    @JoinColumn(name = "personnid")
     private Person personId;
     @Column(name = "username")
     private String userName;

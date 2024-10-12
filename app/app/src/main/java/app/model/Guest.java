@@ -8,6 +8,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,14 +24,17 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name= "invoicedetail")
+@Table(name= "guest")
 public class Guest {
+    @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
-    @Column(name = "userid")
-    private String userId;  
-    @Column(name = "partnerid")
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    private User userId; 
+    @ManyToOne
+    @JoinColumn(name = "partnerid")
     private Partner partnerId;
     @Column(name = "status")
     private Boolean status;
