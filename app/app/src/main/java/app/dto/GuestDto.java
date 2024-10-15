@@ -4,6 +4,7 @@
  */
 package app.dto;
 
+// import app.model.Partner;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

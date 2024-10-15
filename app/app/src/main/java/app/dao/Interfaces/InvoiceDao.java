@@ -19,5 +19,5 @@ public interface InvoiceDao {
     public List<InvoiceDto> findByPartnerId(long partnerId) throws Exception; // Para encontrar facturas por ID de socio
     public List<InvoiceDto> findByPersonId(long personId) throws Exception; // Para encontrar facturas por ID de persona
     public List<InvoiceDto> findAll() throws Exception; // Para obtener todas las facturas
-    public long countByStatus(String status) throws Exception; 
+    public long countByStatus(boolean status) throws Exception; 
 }

@@ -1,7 +1,7 @@
 package app.dao;
 
 import app.dao.Interfaces.UserDao;
-import app.dao.jpainterface.UserRepository;
+import app.dao.repository.UserRepository;
 import app.dto.UserDto;
 import app.helpers.Helper;
 import app.model.User;
@@ -20,19 +20,20 @@ public class UserDaoImplementation implements UserDao {
     private UserRepository userRepository;
 
     @Override
-    public UserDto findByUserName(UserDto userDto) throws Exception {
-        User user = userRepository.findByUserName(userDto.getUserName());
+    public UserDto findByUserName(String userName) throws Exception {
+        User user = userRepository.findByUserName(userName);
         return Helper.parse(user);
     }
 
     @Override
-    public boolean existsByUserName(UserDto userDto) throws Exception {
-        return userRepository.existsByUserName(userDto.getUserName());
+    public String existsByUserName(String userDto) throws Exception {
+        return userRepository.existsByUserName(userDto);
     }
 
     @Override
-    public void createUser(UserDto userDto) throws Exception {
+    public UserDto createUser(UserDto userDto) throws Exception {
         User user = Helper.parse(userDto);
-        userRepository.save(user);
+        User newUser = userRepository.save(user);
+        return Helper.parse(newUser);
     }
 }

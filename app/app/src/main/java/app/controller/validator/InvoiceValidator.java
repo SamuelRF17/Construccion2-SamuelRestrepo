@@ -9,11 +9,10 @@ public class InvoiceValidator extends CommonsValidator {
     }
 
     public void itemsValid(String items) {
-        
+        // Implementación del método
     }
 
     public void amountValid(String amount) {
-       
+        // Implementación del método
     }
-    
 }

@@ -9,16 +9,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class AppApplication implements CommandLineRunner {
     @Autowired
-    LoginController controller;
+    private LoginController controller;
+
     public static void main(String[] args) {
         SpringApplication.run(AppApplication.class, args);
     }
 
     @Override
     public void run(String... args) throws Exception {
-        try{
+        try {
             controller.session();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }

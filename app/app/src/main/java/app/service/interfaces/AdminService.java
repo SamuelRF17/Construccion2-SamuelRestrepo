@@ -1,10 +1,11 @@
 package app.service.interfaces;
 
+import app.dto.InvoiceDto;
+import app.dto.PartnerDto;
 import app.dto.UserDto;
-import app.model.Partner;
 
 public interface AdminService {
-    public void createSeller(UserDto userDto) throws Exception;
-    public void createUser(UserDto userDto) throws Exception;
-    public boolean approveVIPRequest(Partner partner);
+    public void createInvoice(InvoiceDto invoiceDto) throws Exception; 
+    public UserDto createUser(UserDto userDto) throws Exception;
+    public boolean approveVIPRequest(PartnerDto partnerDto)throws Exception;
 }

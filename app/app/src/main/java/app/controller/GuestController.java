@@ -4,7 +4,6 @@
  */
 package app.controller;
 
-import app.dto.UserDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +19,7 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class GuestController implements ControllerInterface{
     
-    private static final String MENU = "-MENU INVITADO-\ningrese la opcion que desea: \n 1. para iniciar sesion. \n 2. para volver.";
+    private static final String MENU = "-MENU INVITADO-\ningrese la opcion que desea: \n 1. para . \n 2. para volver.";
 
 
     @Override

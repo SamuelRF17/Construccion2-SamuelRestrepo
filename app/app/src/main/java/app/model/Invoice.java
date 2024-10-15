@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package app.model;
 
 import jakarta.persistence.Column;
@@ -25,22 +21,27 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name= "invoice")
+@Table(name = "invoice")
 public class Invoice {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long invoiceId;
+
     @ManyToOne
     @JoinColumn(name = "personid")
     private Person personId;
+
     @ManyToOne
-    @JoinColumn(name="partnerid")
+    @JoinColumn(name = "partnerid")
     private Partner partnerId;
+
     @Column(name = "creationdate")
     private Date dateCreated;
+
     @Column(name = "amount")
     private double amount;
+
     @Column(name = "status")
-    private Boolean status;
+    private Boolean status; // Asegurarse de que esto sea Boolean
 }

@@ -1,7 +1,7 @@
 package app.dao;
 
 import app.dao.Interfaces.GuestDao;
-import app.dao.jpainterface.GuestRepository;
+import app.dao.repository.GuestRepository;
 import app.dto.GuestDto;
 import app.helpers.Helper;
 import app.model.Guest;

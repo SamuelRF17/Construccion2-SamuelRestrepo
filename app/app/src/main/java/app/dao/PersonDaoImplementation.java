@@ -1,7 +1,7 @@
 package app.dao;
 
 import app.dao.Interfaces.PersonDao;
-import app.dao.jpainterface.PersonRepository;
+import app.dao.repository.PersonRepository;
 import app.dto.PersonDto;
 import app.helpers.Helper;
 import app.model.Person;
@@ -20,24 +20,31 @@ public class PersonDaoImplementation implements PersonDao {
     private PersonRepository personRepository;
 
     @Override
-    public boolean existsByDocument(PersonDto personDto) throws Exception {
+    public boolean existsByDocument(Person personDto) throws Exception {
         return personRepository.existsByCedula(Helper.parse(personDto).getCedula());
     }
 
     @Override
-    public void createPerson(PersonDto personDto) throws Exception {
-        Person person = Helper.parse(personDto);
-        personRepository.save(person);
+    public PersonDto createPerson(Person personDto) throws Exception {
+        try {
+            Person savedPerson = personRepository.save(personDto);
+            return Helper.parse(savedPerson);
+        } catch (Exception e) {
+            throw new Exception("Error al crear persona: " + e.getMessage());
+        }
     }
 
     @Override
-    public void deletePerson(PersonDto personDto) throws Exception {
-        Person person = Helper.parse(personDto);
-        personRepository.delete(person);
+    public void deletePerson(Person personDto) throws Exception {
+        try {
+            personRepository.delete(personDto);
+        } catch (Exception e) {
+            throw new Exception("Error al eliminar persona: " + e.getMessage());
+        }
     }
 
     @Override
-    public PersonDto findByDocument(PersonDto personDto) throws Exception {
+    public PersonDto findByDocument(Person personDto) throws Exception {
         Person person = personRepository.findByCedula(personDto.getCedula());
         return Helper.parse(person);
     }

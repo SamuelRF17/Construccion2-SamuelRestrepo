@@ -2,9 +2,12 @@ package app.controller;
 
 import app.controller.validator.PersonValidator;
 import app.controller.validator.UserValidator;
+import app.dto.PartnerDto;
 import app.dto.PersonDto;
 import app.dto.UserDto;
-import app.service.interfaces.AdminService;
+import app.helpers.Helper;
+import app.model.Person;
+import app.service.Service;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,16 +24,16 @@ public class AdminController implements ControllerInterface {
     @Autowired
     private UserValidator userValidator;
     @Autowired
-    private AdminService adminService;
+    private Service service;
     private static final String MENU = "Ingrese la opcion que desea \n 1. Para registrar y crear usuario \n 2. Para crear invitado \n 3. Para cerrar sesion \n";
 
 
     @Override
 	public void session() throws Exception {
-            boolean session = true;
-            while (session) {
-                    session = menu();
-            } 
+        boolean session = true;
+        while (session) {
+                session = menu();
+        } 
 	}
 
     private boolean menu() {
@@ -53,7 +56,6 @@ public class AdminController implements ControllerInterface {
                 this.createUser();
                 return true;
             case "2": 
-                // this.createSeller();
                 return true;
             case "3": 
                 System.out.println("se ha cerrado sesion");
@@ -80,9 +82,26 @@ public class AdminController implements ControllerInterface {
         System.out.print("ingrese la contrasena: ");
         String password = Utils.getReader().next();
         userValidator.validPassword(password);
-        PersonDto personDto = new PersonDto();
+        Person personDto = new Person();
+        personDto.setName(name);
+        personDto.setCedula(Long.parseLong(document));
+        personDto.setCelphone(Long.parseLong(celPhone));
+        PersonDto newPersonDto = this.service.createPerson(personDto);
+
         UserDto userDto = new UserDto();
-        this.adminService.createUser(userDto);
+        userDto.setUserName(userName);
+        userDto.setPassword(password);
+        userDto.setPersonId(Helper.parse(personDto));
+        userDto.setPersonId(newPersonDto);
+        userDto.setRol("socio");
+        UserDto newUserDto = this.service.createUser(userDto);
+        
+        PartnerDto partnerDto = new PartnerDto();
+        partnerDto.setUserId(newUserDto);
+        partnerDto.setAmount(50000);
+        partnerDto.setType("standard"); 
+        this.service.save(partnerDto);
+
         System.out.println("|---se ha creado el usuario exitosamente---|");
     }   
 }

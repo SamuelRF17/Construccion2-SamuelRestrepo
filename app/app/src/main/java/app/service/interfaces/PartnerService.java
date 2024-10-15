@@ -2,19 +2,22 @@ package app.service.interfaces;
 
 import app.dto.GuestDto;
 import app.dto.PartnerDto;
+import app.dto.UserDto;
 
 public interface PartnerService {
     public void createGuest(GuestDto GuestDto) throws Exception;
+    
+    public long countVIPs() throws Exception;
 
-    public PartnerDto findByUserName(String userName);
+    public void save(PartnerDto partnerDto) throws Exception;
 
-    public long countVIPs();
+    public void saveGuest(GuestDto guestDto) throws Exception;
 
-    public void save(PartnerDto partnerDto);
+    public boolean hasVIPSlotsAvailable() throws Exception;
 
-    public void saveGuest(GuestDto guestDto);
+    public void findPartner(UserDto userDto) throws Exception;
 
-    public boolean hasVIPSlotsAvailable();
+    public void updatePartner(PartnerDto partnerDto) throws Exception;
 
 }
 

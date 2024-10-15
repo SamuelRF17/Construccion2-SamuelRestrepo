@@ -4,10 +4,13 @@
  */
 package app.service.interfaces;
 
+import app.dto.GuestDto;
+
 /**
  *
  * @author ACER
  */
 public interface GuestService {
-    
+    public void createGuest(GuestDto guestDto) throws Exception;
+    public GuestDto findById(long id) throws Exception;
 }

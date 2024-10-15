@@ -1,10 +1,12 @@
 package app.dao;
 
 import app.dao.Interfaces.PartnerDao;
-import app.dao.jpainterface.PartnerRepository;
+import app.dao.repository.PartnerRepository;
 import app.dto.PartnerDto;
+import app.dto.UserDto;
 import app.helpers.Helper;
 import app.model.Partner;
+import app.model.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +22,7 @@ public class PartnerDaoImplementation implements PartnerDao {
     private PartnerRepository partnerRepository;
 
     @Override
-    public PartnerDto findById(long id) throws Exception {
+    public PartnerDto findByUserId(long id) throws Exception {
         Partner partner = partnerRepository.findById(id).orElse(null);
         return Helper.parse(partner);
     }
@@ -34,5 +36,18 @@ public class PartnerDaoImplementation implements PartnerDao {
     @Override
     public long countVIPs() throws Exception {
         return partnerRepository.countByType("VIP");
+    }
+
+    @Override
+    public PartnerDto findByPartner(UserDto userDto) throws Exception {
+        User user = Helper.parse(userDto);
+        Partner userFound = partnerRepository.findByUserId_Id(user.getId());
+        return Helper.parse(userFound);
+    }
+
+    @Override
+    public void updatePartner(PartnerDto partnerDto) throws Exception {
+        Partner partner = Helper.parse(partnerDto);
+        partnerRepository.save(partner);
     }
 }

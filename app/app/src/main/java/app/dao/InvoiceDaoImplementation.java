@@ -1,8 +1,7 @@
 package app.dao;
 
-
 import app.dao.Interfaces.InvoiceDao;
-import app.dao.jpainterface.InvoiceRepository;
+import app.dao.repository.InvoiceRepository;
 import app.dto.InvoiceDto;
 import app.helpers.Helper;
 import app.model.Invoice;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 @NoArgsConstructor
 @Getter
@@ -40,13 +40,13 @@ public class InvoiceDaoImplementation implements InvoiceDao {
 
     @Override
     public List<InvoiceDto> findByPartnerId(long partnerId) throws Exception {
-        List<Invoice> invoices = invoiceRepository.findByPartnerId(partnerId);
+        List<Invoice> invoices = invoiceRepository.findByPartnerId_Id(partnerId);
         return Helper.parseInvoices(invoices);
     }
 
     @Override
     public List<InvoiceDto> findByPersonId(long personId) throws Exception {
-        List<Invoice> invoices = invoiceRepository.findByPersonId(personId);
+        List<Invoice> invoices = invoiceRepository.findByPersonId_Id(personId);
         return Helper.parseInvoices(invoices);
     }
 
@@ -57,7 +57,7 @@ public class InvoiceDaoImplementation implements InvoiceDao {
     }
 
     @Override
-    public long countByStatus(String status) throws Exception {
+    public long countByStatus(boolean status) throws Exception {
         return invoiceRepository.countByStatus(status);
     }
 }

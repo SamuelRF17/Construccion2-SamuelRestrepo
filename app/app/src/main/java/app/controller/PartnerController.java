@@ -1,43 +1,44 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package app.controller;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
 import app.controller.validator.PersonValidator;
 import app.controller.validator.UserValidator;
 import app.dto.GuestDto;
 import app.dto.PartnerDto;
+import app.dto.PersonDto;
 import app.dto.UserDto;
-import app.helpers.Helper;
-import app.model.Guest;
+import app.model.Person;
+import app.service.Service;
 import app.service.interfaces.AdminService;
 import app.service.interfaces.PartnerService;
+import app.service.interfaces.PersonService;
+import app.service.interfaces.UserService;
 
-/**
- *
- * @author ACER
- */
 @Getter
 @Setter
-@NoArgsConstructor
 @Controller
-public class PartnerController implements ControllerInterface{
+public class PartnerController implements ControllerInterface {
     @Autowired
     private PersonValidator personValidator;
     @Autowired
-    private UserValidator userValidator; 
+    private UserValidator userValidator;
     @Autowired
-    private AdminService adminService; 
+    private AdminService adminService;
     @Autowired
-    private PartnerService partnerService; 
+    private PartnerService partnerService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private Service service;
+    @Autowired
+    private PersonService personService;
+
+    public PartnerController (){
+
+    }
 
     private static final String MENU = "-MENU PARTNER-\ningrese la opcion que desea: \n 1. para crear un invitado. \n 2. para cerrar sesion. \n 3. para solicitar cambio a VIP \n 4. para aumentar fondos a la cuenta de socio";
 
@@ -67,7 +68,7 @@ public class PartnerController implements ControllerInterface{
                 return true;
             }
             case "2": {
-                System.out.println("se detiene el programa");;
+                System.out.println("se ha cerrado sesion");
                 return false;
             }
             case "3": {
@@ -75,7 +76,7 @@ public class PartnerController implements ControllerInterface{
                 return true;
             }
             case "4": {
-                this.increaseFunds();
+                this.increaseFounds();
                 return true;
             }
             default: {
@@ -86,109 +87,94 @@ public class PartnerController implements ControllerInterface{
     }
 
     private void createGuest() throws Exception {
-        System.out.print("--Registro--\nIngrese el nombre de usuario del socio: ");
-        String userName = Utils.getReader().next();
-        userValidator.validUserName(userName);
-        
-        PartnerDto partnerDto = partnerService.findByUserName(userName);
-        if (partnerDto == null) {
-            System.out.println("Socio no encontrado.");
-            return;
-        }
-        
-
+        Person personDto = new Person();
         System.out.println("Ingrese el nombre del invitado: ");
         String name = Utils.getReader().next();
+        personDto.setName(name);
         personValidator.validName(name);
 
-        System.out.println("Ingrese el ducumento del invitado: ");
+        System.out.println("Ingrese el documento del invitado: ");
         String document = Utils.getReader().next();
+        personDto.setCedula(Long.parseLong(document));
         personValidator.validDocument(document);
-
+            
         System.out.println("Ingrese el teléfono del invitado: ");
         String celPhone = Utils.getReader().next();
+        personDto.setCelphone(Long.parseLong(celPhone));
         personValidator.validCelPhone(celPhone);
-
-        System.out.println("Ingrese el nombre de usuario: ");
-        String guestUserName = Utils.getReader().next();
+        personDto.getId();
+        personService.createPerson(personDto);
+        
+        System.out.println("a");
+        PersonDto newPerson = this.service.createPerson(personDto);
+        System.out.println("b");
+        UserDto userDto = new UserDto();
+        System.out.println("c");
+        
+        System.out.println("Ingrese el usuario:");
+        String guestUserName = Utils.getReader().nextLine();
+        userDto.setUserName(guestUserName);
         userValidator.validUserName(guestUserName);
 
         System.out.println("Ingrese la contraseña: ");
         String password = Utils.getReader().next();
+        userDto.setPassword(password);
         userValidator.validPassword(password);
 
-        UserDto userDto = new UserDto();
-        userDto.setUserName(guestUserName);
-        userDto.setPassword(password);
+        PersonDto personDtoToSet = new PersonDto();
+        personDtoToSet.setId(newPerson.getId());
+        userDto.setPersonId(personDtoToSet);
 
-        // Crear Guest y asociarlo con el Partner
+        userDto.setRol("invitado");
+        UserDto newUserDto = this.service.createUser(userDto);
+
         GuestDto guestDto = new GuestDto();
-        guestDto.setUserId(userDto);
-        guestDto.setPartnerId(partnerDto);
+        guestDto.setUserId(newUserDto);
+        guestDto.setPartnerId(service.getPartner());
         guestDto.setStatus(true);
 
-        //Guest guest = Helper.parse(guestDto);
-        partnerService.saveGuest(guestDto);
+        service.saveGuest(guestDto);
 
         System.out.println("|---se ha creado el invitado exitosamente---|");
+}
 
-    }   
-
-    //metodo para solicitar cambio a VIP
     private void requestVip() throws Exception {
-        System.out.println("Ingrese el nombre de usuario: ");
-        String userName = Utils.getReader().next();
-        userValidator.validUserName(userName);
-        System.out.println("Ingrese la contraseña: ");
-        String password = Utils.getReader().next();
-        userValidator.validPassword(password);
-        PartnerDto partner = partnerService.findByUserName(userName);
-        if (partner == null) {
-            System.out.println("Socio no encontrado.");
+        PartnerDto partnerDto = service.getPartner();
+
+        if (partnerDto.getType().equals("VIP")) {
+            System.out.println("Ya eres un socio VIP");
             return;
         }
-
-        if (!partner.getType().equals("Regular")) {
-            System.out.println("El socio no es de tipo Regular.");
+        if (!service.approveVIPRequest(partnerDto)) {
+            System.out.println("No hay cupos disponibles para socios VIP");
             return;
+            
         }
-
-        long countVIPs = partnerService.countVIPs();
-        if (countVIPs >= 5) {
-            System.out.println("No hay cupos disponibles para VIP.");
-            return;
-        }
-
-        // boolean isApproved = adminService.approveVIPRequest(partner);
-        // if (isApproved) {
-        //     partner.setType("VIP");
-        //     partnerService.save(partner);
-        //     System.out.println("La solicitud ha sido aprobada y el socio ahora es VIP.");
-        // } else {
-        //     System.out.println("La solicitud no fue aprobada.");
-        // }
+        
+        
     }
 
-    //metodo para hacer un incremento de fondos a la cuenta de un socio
-    private void increaseFunds() {
-        System.out.println("Ingrese el nombre de usuario: ");
-        String userName = Utils.getReader().next();
-        PartnerDto partnerDto = partnerService.findByUserName(userName);
-        if (partnerDto == null) {
-            System.out.println("Socio no encontrado.");
+    private void increaseFounds() throws Exception {
+        PartnerDto partnerDto = service.getPartner();
+    
+        System.out.println("Ingrese el monto que desea aumentar a su cuenta:");
+        String amount = Utils.getReader().nextLine();
+        double amountToIncrease = Double.parseDouble(amount);
+    
+        if (amountToIncrease <= 0) {
+            System.out.println("El monto debe ser mayor que cero");
             return;
         }
-        System.out.println("Ingrese el monto a incrementar: ");
-        double amount = Utils.getReader().nextDouble();
-
-        double maxIncrease = partnerDto.getType().equals("VIP") ? 5000000 : 1000000;
-
-        if (amount > maxIncrease) {
-            System.out.println("No se puede incrementar más de " + maxIncrease + " para este tipo de socio.");
+    
+        if (partnerDto.getAmount() < amountToIncrease) {
+            System.out.println("No tiene fondos suficientes para realizar el aumento");
             return;
         }
-        partnerDto.setAmount(partnerDto.getAmount() + amount);
-        partnerService.save(partnerDto);
-        System.out.println("Fondos incrementados exitosamente.");
+    
+        partnerDto.setAmount(partnerDto.getAmount() + amountToIncrease);
+        service.updatePartner(partnerDto);
+    
+        System.out.println("Se ha aumentado el monto de su cuenta exitosamente");
+        System.out.println("Nuevo saldo: " + partnerDto.getAmount());
     }
 }

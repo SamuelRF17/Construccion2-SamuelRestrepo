@@ -8,8 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import app.controller.validator.UserValidator;
+import app.dao.UserDaoImplementation;
 import app.dto.UserDto;
-import app.service.interfaces.LoginService;
+import app.service.Service;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,9 @@ public class LoginController implements ControllerInterface{
     @Autowired
     private UserValidator userValidator;
     @Autowired
-    private LoginService service;
+    private Service service;
+    @Autowired
+    private UserDaoImplementation userDaoImplementation;
     private static final String MENU = "-MENU PRICIPAL--\ningrese la opcion que desea: \n 1. para iniciar sesion. \n 2. para detener la ejecucion.";
     private Map<String, ControllerInterface> roles;
 
@@ -84,11 +87,17 @@ public class LoginController implements ControllerInterface{
         userDto.setUserName(userName);
         userDto.setPassword(password);
         this.service.login(userDto);
-        if(roles.get(userDto.getRol()) == null){
-            throw new Exception("el rol no esta registrado");   
+        if(service.getUser().getRol() == null){
+            throw new Exception("el usuario no esta registrado");   
         }
-        System.out.println("--sesion completada--");
-        roles.get(userDto.getRol()).session();
+        System.out.println("--inicio de sesion completada--");
+        String rol = service.getUser().getRol();
+        ControllerInterface controller = roles.get(rol);
+        if (controller != null) {
+            controller.session();
+        } else {
+            throw new Exception("Rol no reconocido");
+        }
     }
     
 }
