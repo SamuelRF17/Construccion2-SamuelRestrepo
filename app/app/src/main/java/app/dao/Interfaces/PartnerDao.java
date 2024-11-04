@@ -13,7 +13,7 @@ import app.dto.UserDto;
  */
 public interface PartnerDao {
     public PartnerDto findByPartner(UserDto userDto) throws Exception;
-    public PartnerDto findByUserId(long userId) throws Exception;
+    public PartnerDto findById(long userId) throws Exception;
     public void updatePartner(PartnerDto partnerDto) throws Exception;
     public void save(PartnerDto partnerDto) throws Exception;
     public long countVIPs() throws Exception;

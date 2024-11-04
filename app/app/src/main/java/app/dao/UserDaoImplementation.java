@@ -22,6 +22,9 @@ public class UserDaoImplementation implements UserDao {
     @Override
     public UserDto findByUserName(String userName) throws Exception {
         User user = userRepository.findByUserName(userName);
+        if (user == null) {
+            return null;
+        }
         return Helper.parse(user);
     }
 

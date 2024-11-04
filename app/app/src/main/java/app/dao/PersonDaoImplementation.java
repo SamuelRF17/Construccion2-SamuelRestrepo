@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 @Getter
 @Setter
 public class PersonDaoImplementation implements PersonDao {
+
     @Autowired
     private PersonRepository personRepository;
 
@@ -46,6 +47,9 @@ public class PersonDaoImplementation implements PersonDao {
     @Override
     public PersonDto findByDocument(Person personDto) throws Exception {
         Person person = personRepository.findByCedula(personDto.getCedula());
+        if (person == null) {
+            return null;
+        }
         return Helper.parse(person);
     }
 }

@@ -126,7 +126,6 @@ public class Helper {
         return invoiceDetail;
     }
 
-    // Métodos para convertir listas
     public static List<PersonDto> parsePersons(List<Person> persons) {
         return persons.stream().map(Helper::parse).collect(Collectors.toList());
     }

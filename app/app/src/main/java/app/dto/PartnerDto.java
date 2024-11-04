@@ -1,6 +1,6 @@
 package app.dto;
 
-import java.security.Timestamp;
+import java.util.Date;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,5 +15,5 @@ public class PartnerDto {
     private UserDto userId;
     private double amount;
     private String type;
-    private Timestamp dateCreated;
+    private Date dateCreated;
 }

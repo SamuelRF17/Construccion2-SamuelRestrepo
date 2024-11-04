@@ -22,6 +22,9 @@ public class GuestDaoImplementation implements GuestDao {
     @Override
     public GuestDto findById(long id) throws Exception {
         Guest guest = guestRepository.findById(id).orElse(null);
+        if (guest == null) {
+            return null;
+        }
         return Helper.parse(guest);
     }
 

@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.security.Timestamp;
+import java.util.Date;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,6 +31,6 @@ public class Partner {
     @Column(name = "type")
     private String type;
     @Column(name = "creationdate")
-    private Timestamp dateCreated;
+    private Date dateCreated;
 
 }

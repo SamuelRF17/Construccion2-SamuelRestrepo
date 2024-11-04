@@ -27,8 +27,8 @@ import app.service.interfaces.UserService;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Service implements AdminService, LoginService, PartnerService, GuestService, UserService, PersonService{
-
+public class Service implements AdminService, LoginService, PartnerService, GuestService, UserService, PersonService {
+    
     @Autowired
     private UserDao userDao;
     
@@ -39,15 +39,15 @@ public class Service implements AdminService, LoginService, PartnerService, Gues
     private PartnerDao partnerDao;
     
     @Autowired
-    private InvoiceDao invoiceDao; 
-
+    private InvoiceDao invoiceDao;    
+    
     @Autowired
     private PersonDao personDao;
     
     private UserDto user;
-
+    
     private PartnerDto partner;
-
+    
     @Override
     public void login(UserDto userDto) throws Exception {
         UserDto userFound = userDao.findByUserName(userDto.getUserName());
@@ -62,22 +62,22 @@ public class Service implements AdminService, LoginService, PartnerService, Gues
             findPartner(userFound);
         }
     }
-
+    
     @Override
-    public void findPartner(UserDto userDto) throws Exception{
+    public void findPartner(UserDto userDto) throws Exception {
         PartnerDto partnerDto = partnerDao.findByPartner(userDto);
         if (partnerDto == null) {
             throw new Exception("No existe socio registrado");
         }
         partner = partnerDto;
     }
-
+    
     @Override
     public void logout() {
         user = null;
         System.out.println("Se ha cerrado sesión");
     }
-
+    
     @Override
     public UserDto createUser(UserDto userDto) throws Exception {
         UserDto userDtoFound = userDao.findByUserName(userDto.getUserName());
@@ -86,19 +86,24 @@ public class Service implements AdminService, LoginService, PartnerService, Gues
         }
         return userDtoFound;
     }
-
+    
     @Override
     public void createGuest(GuestDto guestDto) throws Exception {
         UserDto userDto = guestDto.getUserId();
         createUser(userDto);
+        PartnerDto partnerDto = partnerDao.findById(guestDto.getPartnerId().getId());
+        if (partnerDto == null) {
+            throw new Exception("el socio indicado no existe");
+        }
+        guestDto.setPartnerId(partnerDto);
         guestDao.createGuest(guestDto);
     }
-
+    
     @Override
     public long countVIPs() throws Exception {
         return partnerDao.countVIPs();
     }
-
+    
     @Override
     public boolean approveVIPRequest(PartnerDto partnerDto) throws Exception {
         try {
@@ -113,37 +118,37 @@ public class Service implements AdminService, LoginService, PartnerService, Gues
             return false;
         }
     }
-
+    
     @Override
     public boolean hasVIPSlotsAvailable() throws Exception {
-        return countVIPs() < 5; 
+        return countVIPs() < 5;        
     }
-
+    
     @Override
     public void saveGuest(GuestDto guestDto) throws Exception {
         guestDao.saveGuest(guestDto);
     }
-
+    
     @Override
     public void save(PartnerDto partnerDto) throws Exception {
         partnerDao.save(partnerDto);
     }
-
+    
     @Override
     public String existsByUserName(String userName) throws Exception {
         return userDao.existsByUserName(userName);
     }
-
+    
     @Override
     public void createInvoice(InvoiceDto invoiceDto) throws Exception {
-        invoiceDao.createInvoice(invoiceDto); 
+        invoiceDao.createInvoice(invoiceDto);        
     }
-
+    
     @Override
     public GuestDto findById(long id) throws Exception {
         return guestDao.findById(id);
     }
-
+    
     @Override
     public PersonDto createPerson(Person personDto) throws Exception {
         PersonDto personDtoFound = personDao.findByDocument(personDto);
@@ -152,10 +157,15 @@ public class Service implements AdminService, LoginService, PartnerService, Gues
         }
         return personDtoFound;
     }
-
+    
     @Override
     public void updatePartner(PartnerDto partnerDto) throws Exception {
-        partnerDao.updatePartner(partnerDto);        
-    }
+        PartnerDto userFound = partnerDao.findById(partnerDto.getId());
 
+        if (userFound == null) {
+            throw new Exception("el socio indicado no existe");
+        }
+        partnerDao.updatePartner(userFound);        
+    }
+    
 }
